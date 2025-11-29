@@ -1,0 +1,75 @@
+version: "3.9"
+services:
+  emqx:
+    image: emqx/emqx:latest
+    container_name: emqx
+    ports:
+      - "1883:1883"    # MQTT
+      - "8083:8083"    # WebSocket MQTT
+      - "18083:18083"  # Dashboard
+    environment:
+      - EMQX_LOADED_PLUGINS="emqx_recon,emqx_retainer,emqx_management"
+    restart: always
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: always
+
+  redis-insight:
+    image: redis/redisinsight:latest
+    container_name: redis-insight
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
+    restart: always
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: gps_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  subscriber:
+    build:
+      context: .
+      dockerfile: subs.Dockerfile
+    container_name: subscriber
+    environment:
+      - DATABASE_URL=postgres://postgres:password@postgres:5432/gps_db
+    depends_on:
+      - emqx
+      - redis
+      - postgres
+    restart: always
+
+  api:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    container_name: api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+    restart: always
+
+volumes:
+  postgres-data:
