@@ -8,4 +8,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
-CMD ["npx", "ts-node", "src/api.ts"]
+CMD ["npx", "ts-node", "src/api"]

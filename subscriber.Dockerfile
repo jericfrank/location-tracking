@@ -7,4 +7,4 @@ RUN npm install
 
 COPY . .
 
-CMD ["npx", "ts-node", "src/subs.ts"]
+CMD ["npx", "ts-node", "src/subscriber"]

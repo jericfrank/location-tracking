@@ -28,7 +28,7 @@ services:
     restart: always
 
   postgres:
-    image: postgres:15
+    image: postgis/postgis:15-3.3
     container_name: postgres
     ports:
       - "5432:5432"
@@ -50,7 +50,7 @@ services:
   subscriber:
     build:
       context: .
-      dockerfile: subs.Dockerfile
+      dockerfile: subscriber.Dockerfile
     container_name: subscriber
     environment:
       - DATABASE_URL=postgres://postgres:password@postgres:5432/gps_db
