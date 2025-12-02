@@ -14,6 +14,8 @@ class RedisClient {
       RedisClient.instance = new Redis({
         host: config.redis.host,
         port: config.redis.port,
+        username: config.redis.username,
+        password: config.redis.password,
         retryStrategy: (times) => {
           const delay = Math.min(times * 50, 2000);
           return delay;
