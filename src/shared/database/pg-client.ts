@@ -1,4 +1,5 @@
 import { Pool } from "pg";
+import { config } from "../../config";
 
 /**
  * PostgreSQL connection pool
@@ -10,13 +11,7 @@ class PostgresClient {
 
   static getInstance(): Pool {
     if (!PostgresClient.instance) {
-      PostgresClient.instance = new Pool({
-        user: "postgres",
-        host: "postgres",
-        database: "gps_db",
-        password: "password",
-        port: 5432,
-      });
+      PostgresClient.instance = new Pool(config.db);
 
       PostgresClient.instance.on("error", (err) => {
         console.error("Unexpected PostgreSQL error:", err);

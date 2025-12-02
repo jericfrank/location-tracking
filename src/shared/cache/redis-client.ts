@@ -1,4 +1,5 @@
 import Redis from "ioredis";
+import { config } from "../../config";
 
 /**
  * Redis client singleton
@@ -11,8 +12,8 @@ class RedisClient {
   static getInstance(): Redis {
     if (!RedisClient.instance) {
       RedisClient.instance = new Redis({
-        host: "redis",
-        port: 6379,
+        host: config.redis.host,
+        port: config.redis.port,
         retryStrategy: (times) => {
           const delay = Math.min(times * 50, 2000);
           return delay;
