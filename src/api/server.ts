@@ -32,7 +32,7 @@ export async function startServer() {
   const fastify = createServer();
 
   try {
-    await fastify.listen({ port: config.host.port });
+    await fastify.listen({ port: config.host.port, host: "0.0.0.0" });
     console.log(`🚀 API server started on port ${config.host.port}`);
   } catch (err) {
     fastify.log.error(err);
