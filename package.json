@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "npm run build && node dist/main.js",
+    "build": "tsc",
     "migrate": "node-pg-migrate",
     "test": "tsx src/tests/**/*.test.ts",
     "test:unit": "tsx src/tests/unit/**/*.test.ts",
