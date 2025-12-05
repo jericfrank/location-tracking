@@ -2,6 +2,7 @@ import Fastify from "fastify";
 import { LocationService } from "./services";
 import { LocationController } from "./controllers";
 import { registerLocationRoutes } from "./routes";
+import { config } from "../config";
 
 /**
  * Create and configure the Fastify server
@@ -31,8 +32,8 @@ export async function startServer() {
   const fastify = createServer();
 
   try {
-    await fastify.listen({ port: 3000, host: "0.0.0.0" });
-    console.log("🚀 API server started on port 3000");
+    await fastify.listen({ port: config.host.port });
+    console.log(`🚀 API server started on port ${config.host.port}`);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);

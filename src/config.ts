@@ -3,6 +3,9 @@ import mqtt from "mqtt/*";
 dotenv.config();
 
 export const config = {
+  host: {
+    port: Number(process.env.PORT ?? 3000),
+  },
   mqtt: {
     host: process.env.MQTT_HOST ?? "",
     port: Number(process.env.MQTT_PORT ?? 0),
