@@ -28,6 +28,33 @@ export class LocationController {
   }
 
   /**
+   * GET /devices/last-locations
+   */
+  async getLastLocations(
+    request: FastifyRequest<{ Body: { ids: string[] } }>,
+    reply: FastifyReply
+  ) {
+    const { ids } = request.body;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return reply.code(400).send({ message: "No device IDs provided" });
+    }
+
+    try {
+      const locations = await this.locationService.getLastLocations(ids);
+
+      if (!locations || locations.length === 0) {
+        return reply.code(404).send({ message: "Devices not found" });
+      }
+
+      return reply.code(200).send({ locations });
+    } catch (error) {
+      console.error("Error getting last locations:", error);
+      return reply.code(500).send({ message: "Internal server error" });
+    }
+  }
+
+  /**
    * GET /devices/nearby
    */
   async getNearbyDevices(request: FastifyRequest, reply: FastifyReply) {

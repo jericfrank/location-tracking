@@ -23,6 +23,10 @@ export function registerLocationRoutes(
     controller.getDistance(request, reply)
   );
 
+  fastify.get("/devices/last-locations", (request, reply) =>
+    controller.getAllLastLocation(request, reply)
+  );
+
   // GET /device/:id/history
   fastify.get("/device/:id/history", (request, reply) =>
     controller.getHistory(request, reply)

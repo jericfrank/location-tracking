@@ -24,6 +24,13 @@ export class LocationService {
     };
   }
 
+  async getLastLocations(deviceIds: string[]): Promise<LocationPayload[]> {
+    const results = await Promise.all(
+      deviceIds.map((id) => this.getLastLocation(id))
+    );
+    return results.filter((loc): loc is LocationPayload => loc !== null);
+  }
+
   /**
    * Find devices within a radius of a location
    */
