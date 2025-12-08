@@ -31,10 +31,10 @@ export class LocationController {
    * GET /devices/last-locations
    */
   async getLastLocations(
-    request: FastifyRequest<{ Body: { ids: string[] } }>,
+    request: FastifyRequest,
     reply: FastifyReply
   ) {
-    const { ids } = request.body;
+    const { ids } = request.body as { ids: string[] };
 
     if (!Array.isArray(ids) || ids.length === 0) {
       return reply.code(400).send({ message: "No device IDs provided" });

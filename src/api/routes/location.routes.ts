@@ -24,7 +24,7 @@ export function registerLocationRoutes(
   );
 
   fastify.get("/devices/last-locations", (request, reply) =>
-    controller.getAllLastLocation(request, reply)
+    controller.getLastLocations(request, reply)
   );
 
   // GET /device/:id/history
