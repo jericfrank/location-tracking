@@ -17,6 +17,10 @@ export function createServer() {
   // Register routes
   registerLocationRoutes(fastify, locationController);
 
+  fastify.get("/", async () => {
+    return { message: "API running" };
+  });
+
   // Health check endpoint
   fastify.get("/health", async () => {
     return { status: "ok", timestamp: Date.now() };
