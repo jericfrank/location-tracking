@@ -26,4 +26,7 @@ export const config = {
     username: process.env.REDIS_USERNAME ?? "",
     password: process.env.REDIS_PASSWORD ?? "",
   },
+  decrypt: {
+    key: process.env.DECRYPT_KEY ?? "",
+  }
 };

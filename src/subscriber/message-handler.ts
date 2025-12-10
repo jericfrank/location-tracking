@@ -1,4 +1,5 @@
 import { LocationPayload } from "../types";
+import { decrypt } from "../utils";
 import { BatchProcessor } from "./batch-processor";
 import { CacheManager } from "./cache-manager";
 
@@ -16,9 +17,9 @@ export class MessageHandler {
    */
   async handle(message: Buffer): Promise<void> {
     try {
-      const data: LocationPayload = JSON.parse(message.toString());
-
-      console.log(`📍 Received [${data.deviceId}]:`, data);
+      const payload = message.toString();
+      const data: LocationPayload = JSON.parse(decrypt(payload));
+      console.log(`📍 Received [${data.deviceId}]:`, payload);
 
       // Validate location data
       if (!this.isValidLocation(data)) {
